@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from './Navbar'
 import Comments from './Comments';
 import { MdEdit } from "react-icons/md";
@@ -7,17 +7,36 @@ import { FaUserAlt } from "react-icons/fa";
 import { useLocation, Link } from 'react-router-dom';
 import Footer from './Footer';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import { getToken } from '../session';
 
 function BlogPage() {
+
+  const { id } = useParams();
+
+
   const [comment, setComment] = React.useState('')
   const token = getToken()
   const location = useLocation()
   const data = location.state
-  const blogId = data._id
+  const blogId = id
   const userId = token.userId
   const username = token.name
+
+  // const [userId, setUserId] = React.useState('')
+  // const [username, setUsername] = React.useState('')
+
+
   const URL = import.meta.env.VITE_PUBLIC_BACKEND_URL
+  const getBlog = async () => {
+    const data = await axios.get(`${URL}/blog/${blogId}`)
+    console.log(data);
+  }
+
+
+  useEffect(() => {
+    getBlog()
+  }, [])
   const deleteBlog = async () => {
     await axios.delete(`${URL}/blog/${blogId}`)
     alert('are you sure you want to delete this blog')
@@ -32,7 +51,6 @@ function BlogPage() {
       username,
       comment
     })
-    window.location.reload()
 
   }
 

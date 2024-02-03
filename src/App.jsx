@@ -20,7 +20,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/creatblog" element={<CreatBlog />} />
-          <Route path="/blogpage" element={<Blogpage />} />
+          <Route path="/blogpage/:id" element={<Blogpage />} />
           <Route path="/comments" element={<Comments />} />
         </Routes>
 

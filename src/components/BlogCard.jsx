@@ -9,7 +9,6 @@ function BlogCard() {
         axios.get(`${URL}/blogs`)
             .then((res) => {
                 setBlog(res.data)
-                console.log(res.data.length)
             })
             .catch((err) => {
                 console.log(err)
@@ -34,7 +33,8 @@ function BlogCard() {
                             <p>{item.body}</p>
                         </div>
                         <div className="card-actions">
-                            <Link to={`/blogpage`} state={item} ><button className="btn btn-primary bg-orange-600 hover:bg-orange-700">Read More</button>
+                            <Link to={`/blogpage/${item._id}`} state={item} ><button className="btn btn-primary bg-orange-600 hover:bg-orange-700">Read More
+                            </button>
                             </Link>
                         </div>
                     </div>
