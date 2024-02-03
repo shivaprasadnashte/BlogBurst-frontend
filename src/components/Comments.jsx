@@ -3,11 +3,11 @@ import { MdDelete } from "react-icons/md";
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { getToken } from '../session';
-function Comments() {
+function Comments({blogId}) {
   const token = getToken()
   const location = useLocation()
   const data = location.state
-  const blogid = data._id
+  const blogid = blogId
   const [comment, setComment] = React.useState([])
   const URL = import.meta.env.VITE_PUBLIC_BACKEND_URL
   const deleteComment = async (commentId) => {

@@ -33,7 +33,7 @@ function BlogCard() {
                             <p>{item.body}</p>
                         </div>
                         <div className="card-actions">
-                            <Link to={`/blogpage/${item._id}`} state={item} ><button className="btn btn-primary bg-orange-600 hover:bg-orange-700">Read More
+                            <Link to={`/blogpage/${item._id}`} ><button className="btn btn-primary bg-orange-600 hover:bg-orange-700">Read More
                             </button>
                             </Link>
                         </div>

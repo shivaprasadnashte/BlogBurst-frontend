@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { getToken } from '../session';
 
+
 function BlogPage() {
 
   const { id } = useParams();
@@ -23,14 +24,14 @@ function BlogPage() {
   const userId = token.userId
   const username = token.name
 
-  // const [userId, setUserId] = React.useState('')
-  // const [username, setUsername] = React.useState('')
+  const [blog, setBlog] = React.useState(null)
+
 
 
   const URL = import.meta.env.VITE_PUBLIC_BACKEND_URL
   const getBlog = async () => {
-    const data = await axios.get(`${URL}/blog/${blogId}`)
-    console.log(data);
+    const data = await axios.get(`${URL}/blogs/getblogbyId/${blogId}`)
+    setBlog(data.data)
   }
 
 
@@ -51,21 +52,24 @@ function BlogPage() {
       username,
       comment
     })
+    window.location.reload()
 
   }
 
   return (
     <>
       <Navbar />
+
       <div className=' flex flex-col gap-5 px-2 sm:px-10 py-5 min-h-screen'>
         <img src="/images/hero.jpg" alt="" className=' w-full h-96' />
         <div>
+
           <div className=' w-full flex  justify-end gap-3 sm:text-3xl'>
-            {(token.userId === data.userId) && <div className=' border-2 border-black sm:rounded-xl p-1'>
+            {(token.userId === blog?.userId) && <div className=' border-2 border-black sm:rounded-xl p-1'>
               <MdEdit className=' text-blue-500' />
             </div>}
 
-            {(token.userId === data.userId) && <div className=' border-2 border-black sm:rounded-xl p-1 ' onClick={() => {
+            {(token.userId === blog?.userId) && <div className=' border-2 border-black sm:rounded-xl p-1 ' onClick={() => {
               deleteBlog()
             }}>
               <MdDelete className=' text-red-500' />
@@ -73,21 +77,23 @@ function BlogPage() {
           </div>
 
         </div>
-        <div className=' px-5'>
+        {blog && <div className=' px-5'>
+
           <div className=' w-full flex justify-center mb-3'>
-            <h1 className=' sm:text-4xl text-2xl font-bold'>{data.title}</h1>
+            <h1 className=' sm:text-4xl text-2xl font-bold'>{blog.title}</h1>
           </div>
           <div className=' w-full flex flex-col sm:flex-row mb-3 justify-between sm:py-2 '>
-            <p><span className=' font-bold mr-1'>Author : </span>{data.author}</p>
+            <p><span className=' font-bold mr-1'>Author : </span>{blog.author}</p>
             {/* <p><span className=' font-bold mr-1'>Catigory :</span>computer science</p> */}
-            <p>{data.createdAt} </p>
+            <p>{blog.createdAt} </p>
           </div>
           <div>
             <p>
-              {data.body}
+              {blog.body}
             </p>
           </div>
         </div>
+        }
         <div>
           <div className=' flex w-full'>
             <FaUserAlt className=' mr-2 text-4xl' />
@@ -103,8 +109,8 @@ function BlogPage() {
             <button className=' ml-2 bg-blue-700 px-4 h-10 text-white' onClick={postComment}>Post</button>
           </div>
         </div>
-        <Link to='/comments' state={data}></Link>
-        <Comments />
+        {/* <Link to='/comments' state={data}></Link> */}
+        <Comments blogId={blogId} />
       </div>
       <Footer />
     </>
