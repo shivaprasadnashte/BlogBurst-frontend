@@ -4,7 +4,6 @@ import Comments from './Comments';
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { FaUserAlt } from "react-icons/fa";
-import { useLocation, Link } from 'react-router-dom';
 import Footer from './Footer';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -18,8 +17,6 @@ function BlogPage() {
 
   const [comment, setComment] = React.useState('')
   const token = getToken()
-  const location = useLocation()
-  const data = location.state
   const blogId = id
   const userId = token.userId
   const username = token.name
