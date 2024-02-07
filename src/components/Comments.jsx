@@ -6,7 +6,7 @@ import { getToken } from '../session';
 function Comments({blogId}) {
   const token = getToken()
   const location = useLocation()
-  const data = location.state
+  const data = location.state 
   const blogid = blogId
   const [comment, setComment] = React.useState([])
   const URL = import.meta.env.VITE_PUBLIC_BACKEND_URL
